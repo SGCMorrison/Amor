@@ -56,14 +56,6 @@ body::before {
   font-weight: 400;
 }
 
-.hero h1::before {
-  content: "🌺 ";
-}
-
-.hero h1::after {
-  content: " 🌺";
-}
-
 #contador {
   font-size: 1.2rem;
   color: #5e2a6e;
