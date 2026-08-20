@@ -261,3 +261,17 @@ visibility: visible;
     transform: translate(-50%, -50%) scale(1);
   }
 }
+
+/* Rotación del corazón después de formarse */
+.corazon-te-amo.girando {
+  animation: girar-corazon 20s linear infinite; /* gira continuamente */
+}
+
+@keyframes girar-corazon {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
