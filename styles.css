@@ -1,0 +1,188 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e6d5f5, #f8e1f4, #ffffff);
+  color: #4a2c5a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Fondo decorativo con orquídeas (opcional) */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('imagenes/orquidea-fondo.png'); /* si tienes una imagen de orquídea */
+  background-size: 150px;
+  background-repeat: repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Contenido principal por encima del fondo */
+.hero, .galeria, footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  width: 100%;
+}
+
+.hero h1 {
+  font-family: 'Great Vibes', 'Dancing Script', cursive;
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  color: #7a3b8f;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9);
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.hero h1::before {
+  content: "🌺 ";
+}
+
+.hero h1::after {
+  content: " 🌺";
+}
+
+#contador {
+  font-size: 1.2rem;
+  color: #5e2a6e;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  display: inline-block;
+  backdrop-filter: blur(5px);
+}
+
+/* Galería con tarjetas */
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 1rem;
+  width: 100%;
+  max-width: 600px;
+  flex: 1;
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 300px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(90, 50, 110, 0.15);
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.tarjeta:active {
+  transform: scale(1.02);
+}
+
+.tarjeta img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.tarjeta figcaption {
+  padding: 0.8rem 1rem 1rem;
+  text-align: center;
+}
+
+.tarjeta figcaption h3 {
+  font-size: 1.1rem;
+  color: #7a3b8f;
+  margin-bottom: 0.3rem;
+}
+
+.tarjeta figcaption p {
+  font-size: 0.9rem;
+  color: #4a2c5a;
+  line-height: 1.4;
+}
+
+/* Ajuste para pantallas muy pequeñas */
+@media (max-width: 350px) {
+  .tarjeta {
+    max-width: 100%;
+  }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #7a5c8a;
+  font-size: 0.9rem;
+}
+
+/* Tablets y pantallas más grandes */
+@media (min-width: 600px) {
+  .tarjeta {
+    width: calc(50% - 10px);  /* Dos tarjetas por fila */
+  }
+}
+
+@media (min-width: 900px) {
+  .galeria {
+    max-width: 800px;
+  }
+  .tarjeta {
+    width: calc(33.33% - 14px);  /* Tres tarjetas por fila */
+  }
+}
+
+.orquidea-destacada {
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto 1rem;
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(150, 70, 180, 0.3);
+}
+
+.boton-musica {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: #7a3b8f;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.boton-musica:hover {
+  background: #5e2a6e;
+}
