@@ -170,11 +170,25 @@ function crearCorazonTexto() {
     contenedor.appendChild(span);
   }
 
-  // Tiempo total: número de palabras * retardo (0.1s) + duración de la animación (0.5s) + un pequeño margen
-  const tiempoTotal = numPalabras * 100 + 500 + 200; // en milisegundos
-
-  setTimeout(() => {
-    contenedor.classList.add('girando');
-  }, tiempoTotal);
-}
-
+  // --------------------------------------------------
+  // Agregar las iniciales K & S en el centro del corazón
+  // --------------------------------------------------
+  const iniciales = document.createElement('div');
+  iniciales.id = 'iniciales-ks';
+  iniciales.textContent = 'K & S';
+  
+  // Estilos en línea para que quede centrado y bonito
+  iniciales.style.position = 'absolute';
+  iniciales.style.top = '50%';
+  iniciales.style.left = '50%';
+  iniciales.style.transform = 'translate(-50%, -50%)';
+  iniciales.style.fontSize = '60px';
+  iniciales.style.fontWeight = 'bold';
+  iniciales.style.fontFamily = "'Georgia', 'Times New Roman', cursive";
+  iniciales.style.color = '#FFD700'; // Dorado, combina con morado
+  iniciales.style.textShadow = '0 0 30px rgba(200, 50, 200, 0.9), 0 0 60px rgba(255, 0, 150, 0.5)';
+  iniciales.style.zIndex = '10';
+  iniciales.style.pointerEvents = 'none'; // para que no bloquee clics
+  iniciales.style.letterSpacing = '8px';
+  
+  contenedor.appendChild(iniciales);
