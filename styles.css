@@ -270,4 +270,11 @@ visibility: visible;
   /* Asegura que el contenedor tenga dimensiones fijas */
 }
 
+#iniciales-ks {
+  animation: latidoSuave 2s ease-in-out infinite;
+}
 
+@keyframes latidoSuave {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.08); }
+}
