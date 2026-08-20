@@ -262,16 +262,24 @@ visibility: visible;
   }
 }
 
-/* Rotación del corazón después de formarse */
-.corazon-te-amo.girando {
-  animation: girar-corazon 20s linear infinite; /* gira continuamente */
+#corazon-te-amo {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  margin: 0 auto;
+  /* Asegura que el contenedor tenga dimensiones fijas */
 }
 
-@keyframes girar-corazon {
-  from {
-    transform: rotate(0deg);
+#corazon-te-amo.girando {
+  animation: balanceoLateral 1.5s ease-in-out infinite alternate;
+  transform-origin: center center;
+}
+
+@keyframes balanceoLateral {
+  0% {
+    transform: scaleX(0.9) skewY(2deg);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: scaleX(1.1) skewY(-2deg);
   }
 }
