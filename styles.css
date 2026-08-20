@@ -186,3 +186,45 @@ footer {
 .boton-musica:hover {
   background: #5e2a6e;
 }
+
+/* Modal de imagen */
+.modal {
+  display: none;              /* oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);  /* fondo oscuro */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-abierto {
+  display: flex;             /* cuando se abre usa flex para centrar */
+}
+
+.modal-contenido {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  z-index: 1001;
+}
+
+.modal-cerrar:hover,
+.modal-cerrar:focus {
+  color: #ccc;
+}
