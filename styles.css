@@ -199,10 +199,16 @@ footer {
   background-color: rgba(0, 0, 0, 0.9);  /* fondo oscuro */
   justify-content: center;
   align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.3s, opacity 0.3s ease;
 }
 
 .modal-abierto {
   display: flex;             /* cuando se abre usa flex para centrar */
+visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .modal-contenido {
