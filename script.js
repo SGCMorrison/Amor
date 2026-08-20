@@ -21,7 +21,7 @@ function actualizarContador() {
   // Construir el texto del contador
   const contador = document.getElementById('contador');
   if (contador) {
-    contador.textContent = `💜 Llevamos ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos juntos`;
+    contador.textContent = `💜 Llevamos ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos juntos 💜`;
   }
 }
 
@@ -30,7 +30,7 @@ function crearPetalo() {
   const petalo = document.createElement('div');
   petalo.classList.add('petalo');
   
-  const emojis = ['🌸', '🌺', '💮', '🏵️'];
+  const emojis = ['🌸', '🌺', '🧘🏻‍♀️', '🥰'];
   petalo.textContent = emojis[Math.floor(Math.random() * emojis.length)];
   
   petalo.style.left = Math.random() * 100 + 'vw';
