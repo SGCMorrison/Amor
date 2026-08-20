@@ -146,3 +146,35 @@ function crearCorazonTexto() {
 }
 
 crearCorazonTexto();
+
+
+function crearCorazonTexto() {
+  const contenedor = document.getElementById('corazon-te-amo');
+  const numPalabras = 80;
+  const ancho = 350;
+  const alto = 350;
+  const escala = 10;
+
+  for (let i = 0; i < numPalabras; i++) {
+    const t = (i / numPalabras) * Math.PI * 2;
+    const x = 16 * Math.pow(Math.sin(t), 3);
+    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    const px = ancho / 2 + x * escala;
+    const py = alto / 2 - y * escala;
+
+    const span = document.createElement('span');
+    span.textContent = 'Te amo';
+    span.style.left = px + 'px';
+    span.style.top = py + 'px';
+    span.style.animationDelay = (i * 0.1) + 's';
+    contenedor.appendChild(span);
+  }
+
+  // Tiempo total: número de palabras * retardo (0.1s) + duración de la animación (0.5s) + un pequeño margen
+  const tiempoTotal = numPalabras * 100 + 500 + 200; // en milisegundos
+
+  setTimeout(() => {
+    contenedor.classList.add('girando');
+  }, tiempoTotal);
+}
+
