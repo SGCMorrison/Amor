@@ -166,7 +166,7 @@ function crearCorazonTexto() {
   iniciales.style.top = '50%';
   iniciales.style.left = '50%';
   iniciales.style.transform = 'translate(-50%, -50%)';
-  iniciales.style.fontSize = '60px';
+  iniciales.style.fontSize = '40px';
   iniciales.style.fontWeight = 'bold';
   iniciales.style.fontFamily = "'Georgia', 'Times New Roman', cursive";
   iniciales.style.color = '#FFD700';
