@@ -270,16 +270,4 @@ visibility: visible;
   /* Asegura que el contenedor tenga dimensiones fijas */
 }
 
-#corazon-te-amo.girando {
-  animation: balanceoLateral 1.5s ease-in-out infinite alternate;
-  transform-origin: center center;
-}
 
-@keyframes balanceoLateral {
-  0% {
-    transform: scaleX(0.9) skewY(2deg);
-  }
-  100% {
-    transform: scaleX(1.1) skewY(-2deg);
-  }
-}
