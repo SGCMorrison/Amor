@@ -83,3 +83,38 @@ botonMusica.addEventListener('click', () => {
     botonMusica.textContent = '🎵';
   }
 });
+
+// Previsualización de imágenes (lightbox)
+const modal = document.getElementById('modal-imagen');
+const modalImg = document.getElementById('modal-img');
+const modalCerrar = document.getElementById('modal-cerrar');
+
+// Selecciona todas las imágenes de la galería
+const imagenesGaleria = document.querySelectorAll('.tarjeta img');
+
+imagenesGaleria.forEach(img => {
+  img.addEventListener('click', () => {
+    modalImg.src = img.src;          // copia la ruta de la imagen
+    modalImg.alt = img.alt;          // copia el texto alternativo
+    modal.classList.add('modal-abierto');
+  });
+});
+
+// Cerrar con el botón X
+modalCerrar.addEventListener('click', () => {
+  modal.classList.remove('modal-abierto');
+});
+
+// Cerrar al hacer clic fuera de la imagen (sobre el fondo oscuro)
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.remove('modal-abierto');
+  }
+});
+
+// Cerrar con la tecla Escape (opcional)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('modal-abierto')) {
+    modal.classList.remove('modal-abierto');
+  }
+});
