@@ -118,3 +118,31 @@ document.addEventListener('keydown', (e) => {
     modal.classList.remove('modal-abierto');
   }
 });
+
+// Corazón hecho con la palabra "Te amo"
+function crearCorazonTexto() {
+  const contenedor = document.getElementById('corazon-te-amo');
+  const numPalabras = 80;        // cuántas veces se repetirá la palabra
+  const ancho = 350;
+  const alto = 350;
+  const escala = 10;             // tamaño del corazón
+
+  for (let i = 0; i < numPalabras; i++) {
+    const t = (i / numPalabras) * Math.PI * 2;
+    // Ecuación paramétrica del corazón
+    const x = 16 * Math.pow(Math.sin(t), 3);
+    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    // Convertir a coordenadas del contenedor
+    const px = ancho / 2 + x * escala;
+    const py = alto / 2 - y * escala;
+
+    const span = document.createElement('span');
+    span.textContent = 'Te amo';
+    span.style.left = px + 'px';
+    span.style.top = py + 'px';
+    span.style.animationDelay = (i * 0.1) + 's';  // retardo progresivo
+    contenedor.appendChild(span);
+  }
+}
+
+crearCorazonTexto();
