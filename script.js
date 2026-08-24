@@ -350,12 +350,12 @@ const lugares = [
     nombre: "🔔 Nuestro primer viaje 🏞️",
     coords: [20.913729784309794, -100.74383700158195],
     descripcion: "🌞 4 Dias y 3 noches con mi amorcito 🌚"
-  }
+  },
   {
     nombre: "🌳 Nuestro primer paseo en bici 🚲",
     coords: [20.624135, -100.348090],
     descripcion: "🦆 Quiero pasear asi en distintos lugares ⛰️"
-  },
+  }
 ];
 
 // Agregar marcadores con corazón al mapa
