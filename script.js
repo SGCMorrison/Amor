@@ -339,18 +339,23 @@ const lugares = [
   {
     nombre: "🫣 Donde pasan cosas ricas 💦",
     coords: [19.37748358925077, -99.18724494382177],
-    descripcion: "La pasamos rico"
+    descripcion: "😈 Me demuestras lo maniaca 🌚"
   },
   {
     nombre: "🌳 Tu compa el zedillo 👴🏻",
     coords: [19.415540288297382, -99.19151793846792],
-    descripcion: "Ti amo"
+    descripcion: "🦆 Nuestra primer salida de ñoños 🤓"
   },
   {
     nombre: "🔔 Nuestro primer viaje 🏞️",
     coords: [20.913729784309794, -100.74383700158195],
     descripcion: "🌞 4 Dias y 3 noches con mi amorcito 🌚"
   }
+  {
+    nombre: "🌳 Nuestro primer paseo en bici 🚲",
+    coords: [20.624135, -100.348090],
+    descripcion: "🦆 Quiero pasear asi en distintos lugares ⛰️"
+  },
 ];
 
 // Agregar marcadores con corazón al mapa
