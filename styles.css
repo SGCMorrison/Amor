@@ -527,3 +527,18 @@ visibility: visible;
 .btn-eliminar:hover {
   opacity: 1;
 }
+
+/* Mapa */
+#mapa {
+  height: 400px;        /* o la altura que prefieras */
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+}
+
+.seccion-mapa {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
