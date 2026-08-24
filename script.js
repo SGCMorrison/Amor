@@ -329,27 +329,27 @@ const iconoCorazon = L.divIcon({
   popupAnchor: [0, -20]
 });
 
-// Arreglo de lugares (agrega todos los que quieras)
+// Arreglo de lugares
 const lugares = [
   {
-    nombre: "🌹 Donde te pedí que fueras mi novia",
+    nombre: "🌹 Donde te pedí que fueras mi novia 🌸",
     coords: [19.394553853335765, -99.173612732147], // latitud, longitud
     descripcion: "El lugar más importante de todos ❤️"
   },
   {
-    nombre: "Donde pasan cosas ricas",
+    nombre: "🫣 Donde pasan cosas ricas 💦",
     coords: [19.37748358925077, -99.18724494382177],
-    descripcion: "La pasamos sabroso"
+    descripcion: "La pasamos rico"
   },
   {
-    nombre: "🌳 Tu compa el zedillo",
+    nombre: "🌳 Tu compa el zedillo 👴🏻",
     coords: [19.415540288297382, -99.19151793846792],
     descripcion: "Ti amo"
   },
   {
-    nombre: "🌳 San miguel de allende",
+    nombre: "🔔 Nuestro primer viaje 🏞️",
     coords: [20.913729784309794, -100.74383700158195],
-    descripcion: "Ti amo"
+    descripcion: "🌞 4 Dias y 3 noches con mi amorcito 🌚"
   }
 ];
 
