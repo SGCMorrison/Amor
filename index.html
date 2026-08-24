@@ -12,9 +12,11 @@
     <!-- Firebase SDK (versión clásica con compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <!-- Mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
        
 </head>
-
 
 <body>
   <header class="hero">
@@ -242,6 +244,11 @@
         <p>💕Me encantas hermosa, estos y más momentos así por favor, (que chingue a su madre el texas y su espera de 1hr.)❣️.</p>
       </figcaption>
     </figure>
+
+    <section id="mapa-recuerdos" class="seccion-mapa">
+      <h2 class="titulo-mapa">📍 Nuestros lugares especiales</h2>
+      <div id="mapa"></div>
+    </section>
 
  </main>
   
