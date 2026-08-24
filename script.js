@@ -1,8 +1,20 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyC2nV5e8r5AS1Pt5Plh5prSeHrpkiztsTE",
+  authDomain: "kenia-44e6b.firebaseapp.com",
+  databaseURL: "https://kenia-44e6b-default-rtdb.firebaseio.com",
+  projectId: "kenia-44e6b",
+  storageBucket: "kenia-44e6b.firebasestorage.app",
+  messagingSenderId: "748579728416",
+  appId: "1:748579728416:web:4052bc5cdbab3a0ecce045"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 // ============================================
 // 1. FECHA DE INICIO (cámbiala por la tuya)
 // ============================================
 const fechaInicio = new Date('2026-07-17T00:00:00');
-
 // ============================================
 // 2. CONTADOR DE TIEMPO JUNTOS
 // ============================================
@@ -179,3 +191,122 @@ function crearCorazonTexto() {
 
 // Ejecutar la creación del corazón
 crearCorazonTexto();
+
+// Obtener elementos
+const btnCarta = document.getElementById('btnCarta');
+const carta = document.getElementById('carta');
+const cartaCerrar = document.getElementById('cartaCerrar');
+
+// Abrir carta
+btnCarta.addEventListener('click', () => {
+  carta.classList.add('mostrar');
+  // Opcional: reproducir sonido o música
+});
+
+// Cerrar carta con la X
+cartaCerrar.addEventListener('click', () => {
+  carta.classList.remove('mostrar');
+});
+
+// Cerrar carta al hacer clic fuera del contenido
+carta.addEventListener('click', (e) => {
+  if (e.target === carta) {
+    carta.classList.remove('mostrar');
+  }
+});
+
+// Cerrar con tecla Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && carta.classList.contains('mostrar')) {
+    carta.classList.remove('mostrar');
+  }
+});
+
+// ===== SECCIÓN DE COMENTARIOS (FIREBASE FIRESTORE) =====
+const formComentario = document.getElementById('form-comentario');
+const comentarioInput = document.getElementById('comentario-input');
+const listaComentarios = document.getElementById('lista-comentarios');
+
+// Referencia a la colección de comentarios en Firestore
+const comentariosRef = db.collection('comentarios');
+
+// Cargar comentarios en tiempo real
+function cargarComentariosTiempoReal() {
+  comentariosRef
+    .orderBy('fecha', 'desc') // ordenar por fecha (más reciente primero)
+    .onSnapshot((snapshot) => {
+      listaComentarios.innerHTML = '';
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        crearElementoComentario(data.texto, data.fecha, doc.id);
+      });
+    }, (error) => {
+      console.error("Error al cargar comentarios: ", error);
+      listaComentarios.innerHTML = '<p class="comentario-texto">Error al cargar comentarios 😢</p>';
+    });
+}
+
+// Crear elemento de comentario en el DOM
+function crearElementoComentario(texto, fecha, id) {
+  const div = document.createElement('div');
+  div.className = 'comentario-item';
+  
+  // Mostrar fecha legible
+  let fechaMostrar = fecha;
+  if (fecha && fecha.toDate) {
+    fechaMostrar = fecha.toDate().toLocaleString('es-MX', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+  
+  div.innerHTML = `
+    <p class="comentario-texto">${texto}</p>
+    <span class="comentario-fecha">${fechaMostrar}</span>
+    <button class="btn-eliminar" data-id="${id}" title="Eliminar">🗑️</button>
+  `;
+  
+  // Evento para eliminar
+  div.querySelector('.btn-eliminar').addEventListener('click', async function() {
+    const idComentario = this.getAttribute('data-id');
+    try {
+      await db.collection('comentarios').doc(idComentario).delete();
+    } catch (error) {
+      console.error("Error al eliminar: ", error);
+      alert("No se pudo eliminar el comentario 😢");
+    }
+  });
+  
+  listaComentarios.appendChild(div);
+}
+
+// Guardar comentario
+async function guardarComentario(texto) {
+  try {
+    await comentariosRef.add({
+      texto: texto,
+      fecha: firebase.firestore.FieldValue.serverTimestamp() // usa la hora del servidor
+    });
+    // Limpiar el textarea
+    comentarioInput.value = '';
+  } catch (error) {
+    console.error("Error al guardar: ", error);
+    alert("No se pudo guardar el comentario 😢");
+  }
+}
+
+// Evento submit del formulario
+formComentario.addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const texto = comentarioInput.value.trim();
+  if (texto === '') return;
+  
+  guardarComentario(texto);
+});
+
+// Iniciar carga en tiempo real
+document.addEventListener('DOMContentLoaded', cargarComentariosTiempoReal);
