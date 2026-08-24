@@ -56,6 +56,10 @@ body::before {
   font-weight: 400;
 }
 
+h2 {
+  text-align: center;
+}
+
 #contador {
   font-size: 1.2rem;
   color: #5e2a6e;
