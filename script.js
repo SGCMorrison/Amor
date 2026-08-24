@@ -310,3 +310,62 @@ formComentario.addEventListener('submit', function(e) {
 
 // Iniciar carga en tiempo real
 document.addEventListener('DOMContentLoaded', cargarComentariosTiempoReal);
+
+// ===== MAPA DE RECUERDOS =====
+// Inicializar el mapa (centro en México, puedes ajustar)
+const mapa = L.map('mapa').setView([19.4326, -99.1332], 11); // Guadalajara como ejemplo
+
+// Capa de OpenStreetMap
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/">CARTO</a>'
+}).addTo(mapa);
+
+// Crear icono personalizado con corazón
+const iconoCorazon = L.divIcon({
+  html: '❤️',
+  className: 'icono-corazon',
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+  popupAnchor: [0, -20]
+});
+
+// Arreglo de lugares (agrega todos los que quieras)
+const lugares = [
+  {
+    nombre: "🌹 Donde te pedí que fueras mi novia",
+    coords: [19.394553853335765, -99.173612732147], // latitud, longitud
+    descripcion: "El lugar más importante de todos ❤️"
+  },
+  {
+    nombre: "Donde pasan cosas ricas",
+    coords: [19.37748358925077, -99.18724494382177],
+    descripcion: "La pasamos sabroso"
+  },
+  {
+    nombre: "🌳 Tu compa el zedillo",
+    coords: [19.415540288297382, -99.19151793846792],
+    descripcion: "Ti amo"
+  },
+  {
+    nombre: "🌳 San miguel de allende",
+    coords: [20.913729784309794, -100.74383700158195],
+    descripcion: "Ti amo"
+  }
+];
+
+// Agregar marcadores con corazón al mapa
+lugares.forEach(lugar => {
+  const marcador = L.marker(lugar.coords, { icon: iconoCorazon }).addTo(mapa);
+  marcador.bindPopup(`
+    <strong>${lugar.nombre}</strong><br>
+    <span>${lugar.descripcion}</span>
+  `);
+});
+
+// Hacer zoom cuando se haga clic en un marcador
+mapa.on('popupopen', function(e) {
+  const px = mapa.project(e.popup._latlng);
+  px.y -= 100;
+  mapa.panTo(mapa.unproject(px), { animate: true });
+});
+
