@@ -84,22 +84,205 @@ setInterval(actualizarContador, 1000);
 setInterval(crearPetalo, 1200);
 
 // ============================================
-// 5. CONTROL DE MÚSICA
+// 5. REPRODUCTOR DE MÚSICA (POPUP)
 // ============================================
-const botonMusica = document.getElementById('botonMusica');
-const musicaFondo = document.getElementById('musicaFondo');
+const playlist = [
+  {
+    src: 'AUDIO/Locos-Fondo.mp3',          // reemplaza con tu archivo
+    titulo: 'Locos',
+    artista: 'León Larregui',
+    portada: 'IMAGENES/portada1.jpg'       // reemplaza con tu imagen
+  },
+  {
+    src: 'AUDIO/Birds of a Feather-Billie Eilish.mp3',
+    titulo: 'Birds of a Feather',
+    artista: 'Billie Eilish',
+    portada: 'IMAGENES/portada2.jpg'
+  },
+  // Agrega más canciones aquí...
+];
 
-if (botonMusica && musicaFondo) {
-  botonMusica.addEventListener('click', () => {
-    if (musicaFondo.paused) {
-      musicaFondo.play();
-      botonMusica.textContent = '🎶';
+const botonMusica = document.getElementById('botonMusica');
+const audio = document.getElementById('musicaFondo');
+const reproductorPopup = document.getElementById('reproductor-popup');
+const btnCerrarReproductor = document.getElementById('cerrar-reproductor');
+const btnAnterior = document.getElementById('btn-anterior');
+const btnSiguiente = document.getElementById('btn-siguiente');
+const btnPlayPausa = document.getElementById('btn-play-pausa');
+const barraProgreso = document.getElementById('barra-progreso');
+const tiempoActual = document.getElementById('tiempo-actual');
+const tiempoTotal = document.getElementById('tiempo-total');
+const portadaActual = document.getElementById('portada-actual');
+const tituloCancion = document.getElementById('titulo-cancion');
+const artistaCancion = document.getElementById('artista-cancion');
+
+let indiceActual = 0;
+let reproduciendo = false;
+
+// Cargar canción según índice
+function cargarCancion(indice) {
+  const cancion = playlist[indice];
+  if (!cancion) return;
+
+  audio.src = cancion.src;
+  portadaActual.src = cancion.portada;
+  tituloCancion.textContent = cancion.titulo;
+  artistaCancion.textContent = cancion.artista;
+
+  // Actualizar duración total cuando se carguen metadatos
+  audio.addEventListener('loadedmetadata', function() {
+    tiempoTotal.textContent = formatoTiempo(audio.duration);
+  });
+
+  // Si estaba reproduciendo, continuar
+  if (reproduciendo) {
+    audio.play();
+  }
+}
+
+// Formatear segundos a mm:ss
+function formatoTiempo(segundos) {
+  if (isNaN(segundos)) return '0:00';
+  const min = Math.floor(segundos / 60);
+  const sec = Math.floor(segundos % 60);
+  return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+// Actualizar barra de progreso y tiempo actual
+audio.addEventListener('timeupdate', () => {
+  const progress = (audio.currentTime / audio.duration) * 100;
+  barraProgreso.value = progress;
+  tiempoActual.textContent = formatoTiempo(audio.currentTime);
+});
+
+// Play/Pausa
+function togglePlay() {
+  if (audio.paused) {
+    audio.play();
+    btnPlayPausa.textContent = '⏸';
+    reproduciendo = true;
+  } else {
+    audio.pause();
+    btnPlayPausa.textContent = '▶';
+    reproduciendo = false;
+  }
+}
+
+btnPlayPausa.addEventListener('click', togglePlay);
+
+// Siguiente canción
+btnSiguiente.addEventListener('click', () => {
+  indiceActual = (indiceActual + 1) % playlist.length;
+  cargarCancion(indiceActual);
+  if (audio.paused) {
+    audio.play();
+    btnPlayPausa.textContent = '⏸';
+    reproduciendo = true;
+  }
+});
+
+// Anterior canción
+btnAnterior.addEventListener('click', () => {
+  indiceActual = (indiceActual - 1 + playlist.length) % playlist.length;
+  cargarCancion(indiceActual);
+  if (audio.paused) {
+    audio.play();
+    btnPlayPausa.textContent = '⏸';
+    reproduciendo = true;
+  }
+});
+
+// Barra de progreso (buscar)
+barraProgreso.addEventListener('input', () => {
+  const seekTime = (barraProgreso.value / 100) * audio.duration;
+  audio.currentTime = seekTime;
+});
+
+// Al terminar la canción, pasar a la siguiente
+audio.addEventListener('ended', () => {
+  btnSiguiente.click();
+});
+
+// Abrir/cerrar popup con el botón de música
+botonMusica.addEventListener('click', () => {
+  if (reproductorPopup.classList.contains('abierto')) {
+    reproductorPopup.classList.remove('abierto');
+  } else {
+    reproductorPopup.classList.add('abierto');
+    btnPlayPausa.textContent = audio.paused ? '▶' : '⏸';
+    // Si aún no se ha cargado ninguna canción, cargar la primera
+    if (!audio.src) {
+      cargarCancion(indiceActual);
+    }
+  }
+});
+
+// Cerrar popup con la X
+btnCerrarReproductor.addEventListener('click', () => {
+  reproductorPopup.classList.remove('abierto');
+});
+
+// Cerrar al hacer clic fuera del popup (pero no en el botón)
+document.addEventListener('click', (e) => {
+  if (!reproductorPopup.contains(e.target) && e.target !== botonMusica) {
+    reproductorPopup.classList.remove('abierto');
+  }
+});
+
+// Inicializar con la primera canción
+cargarCancion(0);
+
+// Generar la lista de canciones en el popup
+function generarListaCanciones() {
+  const ul = document.getElementById('lista-canciones');
+  ul.innerHTML = '';
+
+  playlist.forEach((cancion, idx) => {
+    const li = document.createElement('li');
+    li.dataset.indice = idx;
+    li.innerHTML = `
+      <span class="num">${idx + 1}</span>
+      <span>${cancion.titulo}</span>
+      <span style="margin-left:auto; font-size:0.8rem; color:#888;">${cancion.artista}</span>
+    `;
+
+    li.addEventListener('click', () => {
+      indiceActual = idx;
+      cargarCancion(indiceActual);
+      audio.play();
+      btnPlayPausa.textContent = '⏸';
+      reproduciendo = true;
+      marcarCancionActiva(idx);
+    });
+
+    ul.appendChild(li);
+  });
+}
+
+// Marcar la canción activa en la lista
+function marcarCancionActiva(indice) {
+  const items = document.querySelectorAll('#lista-canciones li');
+  items.forEach((item, idx) => {
+    if (idx === indice) {
+      item.classList.add('activa');
     } else {
-      musicaFondo.pause();
-      botonMusica.textContent = '🎵';
+      item.classList.remove('activa');
     }
   });
 }
+
+// Llamar a generarListaCanciones al inicio
+generarListaCanciones();
+
+// Agregar funcionalidad de despliegue
+const btnToggleLista = document.getElementById('btn-toggle-lista');
+const playlistDesplegable = document.querySelector('.playlist-desplegable');
+
+btnToggleLista.addEventListener('click', () => {
+  playlistDesplegable.classList.toggle('abierto');
+});
+
+
 
 // ============================================
 // 6. LIGHTBOX / MODAL PARA IMÁGENES
@@ -329,32 +512,27 @@ const iconoCorazon = L.divIcon({
   popupAnchor: [0, -20]
 });
 
-// Arreglo de lugares
+// Arreglo de lugares (agrega todos los que quieras)
 const lugares = [
   {
-    nombre: "🌹 Donde te pedí que fueras mi novia 🌸",
+    nombre: "🌹 Donde te pedí que fueras mi novia",
     coords: [19.394553853335765, -99.173612732147], // latitud, longitud
     descripcion: "El lugar más importante de todos ❤️"
   },
   {
-    nombre: "🫣 Donde pasan cosas ricas 💦",
+    nombre: "Donde pasan cosas ricas",
     coords: [19.37748358925077, -99.18724494382177],
-    descripcion: "😈 Me demuestras lo maniaca 🌚"
+    descripcion: "La pasamos sabroso"
   },
   {
-    nombre: "🌳 Tu compa el zedillo 👴🏻",
+    nombre: "🌳 Tu compa el zedillo",
     coords: [19.415540288297382, -99.19151793846792],
-    descripcion: "🦆 Nuestra primer salida de ñoños 🤓"
+    descripcion: "Ti amo"
   },
   {
-    nombre: "🔔 Nuestro primer viaje 🏞️",
+    nombre: "🌳 San miguel de allende",
     coords: [20.913729784309794, -100.74383700158195],
-    descripcion: "🌞 4 Dias y 3 noches con mi amorcito 🌚"
-  },
-  {
-    nombre: "🌳 Nuestro primer paseo en bici 🚲",
-    coords: [20.624135, -100.348090],
-    descripcion: "🦆 Quiero pasear asi en distintos lugares ⛰️"
+    descripcion: "Ti amo"
   }
 ];
 
