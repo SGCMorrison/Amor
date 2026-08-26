@@ -26,8 +26,12 @@
       <!-- Corazón hecho con la palabra Te amo -->
 <div id="corazon-te-amo" class="corazon-te-amo"></div>
 
-    <h1>Nuestra historia...</h1>
+      
     <p id="contador"></p>
+    <br> <!-- salto de linea -->
+    <p> </p>
+    <h1>En 1 mes hicimos...</h1>
+    <br> <!-- salto de linea -->
   </header>
   
 
@@ -35,6 +39,39 @@
   <button id="botonMusica" class="boton-musica" aria-label="Reproducir música">
     🎵
   </button>
+
+  <div id="reproductor-popup" class="reproductor-popup">
+    <div class="reproductor-portada">
+      <img id="portada-actual" src="" alt="Portada del álbum">
+    </div>
+    <div class="reproductor-info">
+      <h4 id="titulo-cancion">Título</h4>
+      <p id="artista-cancion">Artista</p>
+    </div>
+    <div class="reproductor-progreso">
+      <input type="range" id="barra-progreso" min="0" max="100" value="0">
+      <div class="tiempos">
+        <span id="tiempo-actual">0:00</span>
+        <span id="tiempo-total">0:00</span>
+      </div>
+    </div>
+    <div class="reproductor-controles">
+      <button id="btn-anterior" class="control-btn">⏮</button>
+      <button id="btn-play-pausa" class="control-btn play-btn">▶</button>
+      <button id="btn-siguiente" class="control-btn">⏭</button>
+    </div>
+    <!-- Lista desplegable -->
+    <div class="playlist-desplegable">
+      <button id="btn-toggle-lista" class="btn-toggle-lista">
+        <span>🎵 Lista de canciones</span>
+        <span class="flecha">▼</span>
+      </button>
+      <div class="playlist-contenido" id="playlist-contenido">
+        <ul id="lista-canciones"></ul>
+      </div>
+    </div>
+    <button id="cerrar-reproductor" class="cerrar-reproductor">✕</button>
+  </div>
 
   <!-- Audio oculto -->
 <audio id="musicaFondo" loop>
@@ -264,16 +301,16 @@
   <div class="carta-contenido">
     <span class="carta-cerrar" id="cartaCerrar">&times;</span>
     <div class="carta-sello">❤️</div>
-    <h2>😘 Para mi Amor 🥰</h2>
+    <h2>Para mi Kenia</h2>
     <p>
       Mi amor,<br><br>
-      A veces me pongo a pensar en cómo empezó todo entre nosotros y todavía me da risa que después de tan poco tiempo termináramos así, queriéndonos de esta manera.<br><br>
-      Me encanta que contigo puedo ser yo, hacerte reír, decir puras mamadas y también tener esos momentos en los que simplemente quiero abrazarte y no soltarte.<br><br>
-      No soy el mejor diciendo cosas románticas, pero contigo sí quiero intentarlo. Quiero que sepas que te quiero muchísimo y que me haces muy feliz. Me encanta compartir mis días contigo, nuestras bromas, nuestras salidas, las piñas coladas jajaja.<br><br>
+      A veces me pongo a pensar en cómo empezó todo entre nosotros y todavía me da risa que después de tanto tiempo termináramos así, queriéndonos de esta manera.<br><br>
+      Me encanta que contigo puedo ser yo, molestarte, hacerte reír, decir puras mamadas y también tener esos momentos en los que simplemente quiero abrazarte y no soltarte.<br><br>
+      No soy el mejor diciendo cosas románticas, pero contigo sí quiero intentarlo. Quiero que sepas que te quiero muchísimo y que me haces muy feliz. Me encanta compartir mis días contigo, nuestras bromas, nuestras salidas, las piñas coladas y hasta nuestras pequeñas peleas jajaja.<br><br>
       Gracias por llegar a mi vida y por hacer que algo tan bonito se sintiera tan natural. <br><br>
       Y sí, aunque probablemente siga diciendo que yo te amo más, los dos sabemos que tengo razón.❤️
     </p>
-    <p class="firma">Con todo mi amor,<br>Sam😎</p>
+    <p class="firma">Con todo mi amor,<br>Tu programador favorito. Sam😎</p>
   </div>
 </div>
 
