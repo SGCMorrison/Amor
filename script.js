@@ -584,9 +584,14 @@ const lugares = [
     descripcion: "Ti amo"
   },
   {
-    nombre: "🌳 San miguel de allende",
+    nombre: "🔔 Nuestro primer viaje 🏞️",
     coords: [20.913729784309794, -100.74383700158195],
-    descripcion: "Ti amo"
+    descripcion: "🌞 4 dias y 3 noches con amorcito 🌚"
+  },
+  {
+    nombre: "🌳 Nuestro primer paseo en bici 🚲",
+    coords: [20.624135, -100.348090],
+    descripcion: "🦆 Quiero pasear asi en distintos lugares ⛰️"
   }
 ];
 
