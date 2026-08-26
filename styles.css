@@ -56,10 +56,6 @@ body::before {
   font-weight: 400;
 }
 
-h2 {
-  text-align: center;
-}
-
 #contador {
   font-size: 1.2rem;
   color: #5e2a6e;
@@ -545,4 +541,229 @@ visibility: visible;
   padding: 1rem;
   max-width: 800px;
   margin: 0 auto;
+}
+
+/* ===== Reproductor popup estilo liquid glass ===== */
+.reproductor-popup {
+  position: fixed;
+  bottom: 90px;               /* justo encima del botón */
+  right: 20px;
+  width: 300px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.reproductor-popup.abierto {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.reproductor-portada img {
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+}
+
+.reproductor-info h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.reproductor-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+.reproductor-progreso {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.reproductor-progreso input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 5px;
+  background: rgba(0,0,0,0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.reproductor-progreso input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #ff4757;
+  cursor: pointer;
+}
+
+.tiempos {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+.reproductor-controles {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.control-btn:hover {
+  transform: scale(1.1);
+  color: #ff4757;
+}
+
+.play-btn {
+  font-size: 2rem;
+  color: #ff4757;
+}
+
+.cerrar-reproductor {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.cerrar-reproductor:hover {
+  color: #ff4757;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 400px) {
+  .reproductor-popup {
+    width: 260px;
+    right: 10px;
+    bottom: 80px;
+  }
+}
+
+/* Lista desplegable */
+.playlist-desplegable {
+  margin-top: 10px;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-toggle-lista {
+  background: none;
+  border: none;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 5px;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 8px;
+}
+
+.btn-toggle-lista:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.flecha {
+  transition: transform 0.3s;
+}
+
+.playlist-desplegable.abierto .flecha {
+  transform: rotate(180deg);
+}
+
+.playlist-contenido {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.playlist-desplegable.abierto .playlist-contenido {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+#lista-canciones {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#lista-canciones li {
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#lista-canciones li:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+#lista-canciones li.activa {
+  background: rgba(255, 71, 87, 0.3);
+  color: #fff;
+  font-weight: bold;
+}
+
+#lista-canciones li .num {
+  width: 20px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+#lista-canciones li.activa .num {
+  color: #fff;
+}
+
+/* Ajuste general del popup */
+.reproductor-popup {
+  width: 340px;
+  max-height: 70vh;
 }
