@@ -717,3 +717,70 @@ formPlan.addEventListener('submit', function(e) {
 
 // Iniciar carga en tiempo real de planes
 document.addEventListener('DOMContentLoaded', cargarPlanesTiempoReal);
+
+// ============================================
+// 9. BOTÓN "DAME UNA RAZÓN PARA SONREÍR"
+// ============================================
+
+// Lista de frases positivas y románticas
+const frases = [
+  "Eres la razón por la que sonrío todos los días 😊",
+  "Tu sonrisa ilumina mi mundo 🌟",
+  "Eres más hermosa hasta sin rimel 😊",
+  "Cada día a tu lado es un regalo 🎁",
+  "Tu risa es mi canción favorita 🎵",
+  "Eres la persona más increíble que conozco 💖",
+  "Contigo, hasta los días grises son coloridos 🌈",
+  "Eres mi sueño hecho realidad 🌙",
+  "No hay nadie como tú en el mundo 🌍",
+  "Tu felicidad es mi prioridad número uno ❤️",
+  "Cada instante contigo es mágico 🪄",
+  "Tu abrazo es mi lugar favorito 🤗",
+  "Me encanta cómo me miras 👀",
+  "Eres mi mejor decisión 🥇",
+  "Contigo aprendí qué es el amor a primera vista 💘",
+  "Eres la razón por la que mi corazón late más rápido cada día ❤️",
+  "Tus besos son mi medicina favorita 😊",
+  "No hay distancia que pueda apagar el amor que siento por ti 🌍",
+  "Me encanta cómo ríes cuando te cuento algo tonto 😂",
+  "Contigo, hasta el día más aburrido se vuelve especial ✨",
+  "Me fascina cómo te emocionas por las cosas pequeñas 🥰🌼",
+  "Compartir un helado contigo es mi plan favorito 🍦❤️",
+  "Ver cómo te preocupas por los perritos me hace quererte más 🐶🥺",
+  "Creo en ti y en todo lo que puedes lograr 💪🌟",
+  "Recuerda que siempre tienes a alguien que te ama incondicionalmente 🤗💖",
+  "Eres capaz de cosas increíbles, nunca lo dudes 🚀✨",
+  "Tu felicidad es mi mayor motivación 😊💪",
+  "Contigo, hasta ir al supermercado es una aventura 🛒🎢",
+  "El universo nos puso juntos, y yo le agradezco eternamente 🌌🙏",
+];
+
+// Obtener elementos
+const btnRazon = document.getElementById('btnRazon');
+const razonTexto = document.getElementById('razonTexto');
+
+// Función para mostrar una frase aleatoria con animación
+function mostrarRazon() {
+  // Seleccionar una frase aleatoria
+  const indice = Math.floor(Math.random() * frases.length);
+  const frase = frases[indice];
+  
+  // Aplicar animación de cambio
+  razonTexto.classList.remove('cambiando');
+  // Forzar reflujo para reiniciar la animación
+  void razonTexto.offsetWidth;
+  razonTexto.classList.add('cambiando');
+  
+  // Actualizar el texto
+  razonTexto.textContent = frase;
+}
+
+// Evento click del botón
+btnRazon.addEventListener('click', mostrarRazon);
+
+// Opcional: mostrar una frase aleatoria al cargar la página
+window.addEventListener('load', () => {
+  // Mostrar una frase inicial aleatoria (pero sin animación)
+  const indice = Math.floor(Math.random() * frases.length);
+  razonTexto.textContent = frases[indice];
+});
