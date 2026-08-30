@@ -611,3 +611,109 @@ mapa.on('popupopen', function(e) {
   mapa.panTo(mapa.unproject(px), { animate: true });
 });
 
+
+// ===== SECCIÓN DE PLANES (FIREBASE FIRESTORE) =====
+const formPlan = document.getElementById('form-plan');
+const planInput = document.getElementById('plan-input');
+const listaPlanes = document.getElementById('lista-planes');
+
+// Referencia a la colección "planes"
+const planesRef = db.collection('planes');
+
+// Cargar planes en tiempo real
+function cargarPlanesTiempoReal() {
+  planesRef
+    .orderBy('fecha', 'desc')
+    .onSnapshot((snapshot) => {
+      listaPlanes.innerHTML = '';
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        crearElementoPlan(data.texto, data.completado || false, data.fecha, doc.id);
+      });
+    }, (error) => {
+      console.error("Error al cargar planes: ", error);
+      listaPlanes.innerHTML = '<p class="error">Error al cargar planes 😢</p>';
+    });
+}
+
+// Crear elemento plan en el DOM
+function crearElementoPlan(texto, completado, fecha, id) {
+  const div = document.createElement('div');
+  div.className = 'plan-item' + (completado ? ' completado' : '');
+  
+  // Mostrar fecha legible
+  let fechaMostrar = '';
+  if (fecha && fecha.toDate) {
+    fechaMostrar = fecha.toDate().toLocaleString('es-MX', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
+  div.innerHTML = `
+    <div>
+      <span class="plan-texto">${texto}</span>
+      <span class="plan-fecha">${fechaMostrar}</span>
+    </div>
+    <div class="plan-acciones">
+      <button class="btn-completar" data-id="${id}" title="Marcar como completado">✅</button>
+      <button class="btn-eliminar-plan" data-id="${id}" title="Eliminar">🗑️</button>
+    </div>
+  `;
+
+  // Evento completar
+  div.querySelector('.btn-completar').addEventListener('click', async function() {
+    const idPlan = this.getAttribute('data-id');
+    const nuevoEstado = !completado;
+    try {
+      await db.collection('planes').doc(idPlan).update({
+        completado: nuevoEstado
+      });
+    } catch (error) {
+      console.error("Error al actualizar plan: ", error);
+      alert("No se pudo actualizar el plan 😢");
+    }
+  });
+
+  // Evento eliminar
+  div.querySelector('.btn-eliminar-plan').addEventListener('click', async function() {
+    const idPlan = this.getAttribute('data-id');
+    if (confirm('¿Seguro que quieres eliminar este plan?')) {
+      try {
+        await db.collection('planes').doc(idPlan).delete();
+      } catch (error) {
+        console.error("Error al eliminar plan: ", error);
+        alert("No se pudo eliminar el plan 😢");
+      }
+    }
+  });
+
+  listaPlanes.appendChild(div);
+}
+
+// Agregar plan
+async function agregarPlan(texto) {
+  try {
+    await planesRef.add({
+      texto: texto,
+      completado: false,
+      fecha: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    planInput.value = '';
+  } catch (error) {
+    console.error("Error al agregar plan: ", error);
+    alert("No se pudo agregar el plan 😢");
+  }
+}
+
+// Evento submit del formulario de planes
+formPlan.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const texto = planInput.value.trim();
+  if (texto === '') return;
+  agregarPlan(texto);
+});
+
+// Iniciar carga en tiempo real de planes
+document.addEventListener('DOMContentLoaded', cargarPlanesTiempoReal);
