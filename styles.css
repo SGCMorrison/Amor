@@ -895,3 +895,68 @@ visibility: visible;
   margin-top: 3px;
   display: block;
 }
+
+/* ===== Sección "Dame una razón para sonreír" ===== */
+.seccion-razon {
+  text-align: center;
+  margin: 3rem auto;
+  padding: 1rem;
+  max-width: 600px;
+}
+
+.btn-razon {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  border: none;
+  padding: 15px 35px;
+  font-size: 1.3rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Dancing Script', cursive;
+  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.btn-razon:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(245, 87, 108, 0.6);
+}
+
+.btn-razon:active {
+  transform: scale(0.95);
+}
+
+.razon-container {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.razon-texto {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  color: #5a3e36;
+  margin: 0;
+  line-height: 1.4;
+  transition: opacity 0.3s ease;
+}
+
+/* Animación al cambiar la frase */
+.razon-texto.cambiando {
+  animation: destello 0.5s ease;
+}
+
+@keyframes destello {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
