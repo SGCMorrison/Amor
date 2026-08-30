@@ -679,7 +679,7 @@ function crearElementoPlan(texto, completado, fecha, id) {
   // Evento eliminar
   div.querySelector('.btn-eliminar-plan').addEventListener('click', async function() {
     const idPlan = this.getAttribute('data-id');
-    if (confirm('¿Seguro que quieres eliminar este plan?')) {
+    if (confirm('🫣¿Segura que quieres eliminar este plan?🥲')) {
       try {
         await db.collection('planes').doc(idPlan).delete();
       } catch (error) {
