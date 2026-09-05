@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❤️u❤️ Te amo ❤️u❤️ Kenia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Firebase SDK (versión clásica con compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <!-- Mapa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <header class="hero">
+    <h1> ❤️u❤️ Me encantas ❤️u❤️ </h1>
+    <!-- <img src="IMAGENES/Orquidea.jpg" alt="Orquídea" class="orquidea-destacada"> -->
+
+    <!-- Corazón hecho con la palabra Te amo -->
+    <div id="corazon-te-amo" class="corazon-te-amo"></div>
+
+
+    <p id="contador"></p>
+    <br> <!-- salto de linea -->
+    <p> </p>
+    <h1>Nuestra historia...</h1>
+    <br> <!-- salto de linea -->
+  </header>
+
+
+  <!-- ################## Inicio Reproductor ##################-->
+  <button id="botonMusica" class="boton-musica" aria-label="Reproducir música">
+    🎵
+  </button>
+  <div id="reproductor-popup" class="reproductor-popup">
+    <div class="reproductor-portada">
+      <img id="portada-actual" src="" alt="Portada del álbum">
+    </div>
+    <div class="reproductor-info">
+      <h4 id="titulo-cancion">Título</h4>
+      <p id="artista-cancion">Artista</p>
+    </div>
+    <div class="reproductor-progreso">
+      <input type="range" id="barra-progreso" min="0" max="100" value="0">
+      <div class="tiempos">
+        <span id="tiempo-actual">0:00</span>
+        <span id="tiempo-total">0:00</span>
+      </div>
+    </div>
+    <div class="reproductor-controles">
+      <button id="btn-anterior" class="control-btn">⏮</button>
+      <button id="btn-play-pausa" class="control-btn play-btn">▶</button>
+      <button id="btn-siguiente" class="control-btn">⏭</button>
+    </div>
+    <!-- Lista desplegable -->
+    <div class="playlist-desplegable">
+      <button id="btn-toggle-lista" class="btn-toggle-lista">
+        <span>🎵 Lista de canciones</span>
+        <span class="flecha">▼</span>
+      </button>
+      <div class="playlist-contenido" id="playlist-contenido">
+        <ul id="lista-canciones"></ul>
+      </div>
+    </div>
+    <button id="cerrar-reproductor" class="cerrar-reproductor">✕</button>
+  </div>
+  <audio id="musicaFondo">
+    <source src="AUDIO/Locos-Fondo.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+  <!-- ################## Fin Reproductor ##################-->
+
+  <!-- ################## Inicia Galeria ##################-->
+  <!-- ################## Inicia Galeria (Carrusel) ################## -->
+<main class="galeria">
+  <div class="carrusel-container">
+    <div class="carrusel-track" id="carruselTrack">
+      <!-- Tarjeta 1 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_1.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🥰Nuestro primer TE AMO🥰</h3>
+          <p>Ese día me sorprendí que dijeras eso porque no me lo esperaba 🫣, fue tan natural, tan hermoso 🥰.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 2 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_2.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🥴Somos unos alcoholicos🥂</h3>
+          <p>Me encanta probar nuevas cosas juntos🥰, (vamos a AA con el Fer).</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 3 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_3.jpeg" loading="lazy">
+        <figcaption>
+          <h3>😏Nos encanta💦</h3>
+          <p>🥰 Me encanta tocarte, acariciarte, besarte.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 4 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_4.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🤓Salida de ñoños👦🏻👧🏻</h3>
+          <p>Aprendimos a que no todo es 🍆💦 podemos pasarla bien.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 5 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_5.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🍗Me encanta comer contigo🍔</h3>
+          <p>Me encanta que comamos cosas que nos gustan y poder compartirlas🤤.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 6 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_6.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🐾Querer a los animalitos🐶</h3>
+          <p>🦋Amo que seas amable con todos los animalitos sin importar su tamaño🐌🕷️.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 7 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_7.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🏞️Te gusta la naturaleza🌳</h3>
+          <p>😌Este día estabas estresada, gracias por permitirme acompañarte, no me importa si estás enojada, estresada, triste, feliz, siempre quiero estar junto a ti🌳.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 8 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_8.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🍿Ver mis pelis tontas🎬</h3>
+          <p>Me encanta que hagamos cosas que también me gustan 🥰 porque quiero compartir mi felicidad contigo 🫣.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 9 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_9.jpeg" loading="lazy">
+        <figcaption>
+          <h3>👴🏻Tu compa el Zedillo🤝🏻</h3>
+          <p>Para este día no salió como quería 🥺 pero supimos pasarla bien a pesar de todo (pipi, lluvia, hambre, cansancio).</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 10 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_10.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🌸Bugambilias🌺</h3>
+          <p>☺️Una de tus flores favoritas, siempre que las veo me acuerdo de ti hermosa🥰.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 11 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_11.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🙈Changüito mion, (como tú)🙊</h3>
+          <p>😛Jejejeje siempre quise uno, y ahora lo tengo (tú)🥰.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 12 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_12.jpeg" loading="lazy">
+        <figcaption>
+          <h3>❤️El comienzo de algo...🥰</h3>
+          <p>🍾No necesito recordarte que pasó aquí, qué bueno que no te lo esperabas🥂.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 13 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_13.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🌹Por ti haria lo que sea🥂</h3>
+          <p>🥰En este momento estaba pensando en cómo decírtelo💕.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 14 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_14.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🍷Mi corazón palpitaba por ti💗</h3>
+          <p>🥰En este momento fue el más feliz.... dijiste que sí😘.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 15 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_15.jpeg" loading="lazy">
+        <figcaption>
+          <h3>❤️Simplemente TE AMO❤️</h3>
+          <p>❣️Por más experiencias asi💘.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 16 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_16.jpeg" loading="lazy">
+        <figcaption>
+          <h3>😂Encontramos diversión donde sea😂</h3>
+          <p>🛒Una simple ida al super puede ser genial🛍️.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 17 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_17.jpeg" loading="lazy">
+        <figcaption>
+          <h3>😳Me surraba de nervios😥</h3>
+          <p>🫣Conocer a tu familia me ponía muy nervioso🫣.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 18 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_18.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🐶Lu🦴</h3>
+          <p>🐶Tu niña me encanta, quiero que conozcas al Rex☺️.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 19 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_19.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🌳Todas la tardes las haces especiales🦆</h3>
+          <p>🌅Quiero estar siempre junto a ti, sin importar el lugar🌳.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 20 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_20.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🚴🏻Pasear contigo es hermoso🚴🏻‍♀️</h3>
+          <p>🚲Hacer actividades como esta me tranquilizan🌅.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 21 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_21.jpeg" loading="lazy">
+        <figcaption>
+          <h3>🏡Tu familia🔔</h3>
+          <p>🧔🏻Gracias por presentarme a tu familia🫣.</p>
+        </figcaption>
+      </figure>
+      <!-- Tarjeta 22 -->
+      <figure class="tarjeta">
+        <img src="IMAGENES/Foto_22.jpeg" loading="lazy">
+        <figcaption>
+          <h3>❤️Te amo❤️</h3>
+          <p>💕Me encantas hermosa, estos y más momentos así por favor, (que chingue a su madre el texas y su espera de 1hr.)❣️.</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Controles del carrusel -->
+    <button class="carrusel-btn carrusel-btn-prev" id="carruselPrev">‹</button>
+    <button class="carrusel-btn carrusel-btn-next" id="carruselNext">›</button>
+
+    <!-- Indicadores (puntos) -->
+    <div class="carrusel-indicadores" id="carruselIndicadores"></div>
+  </div>
+
+  <!-- ################## Fin Galeria ################## -->
+</main>
+
+    <!-- ################## Fin Galeria ##################-->
+
+    <!-- ################## Inicio Mapa Recuerdos ##################-->
+    <section id="mapa-recuerdos" class="seccion-mapa">
+      <h2 class="titulo-mapa">📍 Nuestros lugares especiales</h2>
+      <div id="mapa"></div>
+    </section>
+    <!-- ################## Fin Mapa Recuerdos ##################-->
+
+  </main>
+
+  <!-- Modal para previsualizar imagen -->
+  <div id="modal-imagen" class="modal">
+    <span class="modal-cerrar" id="modal-cerrar">&times;</span>
+    <img class="modal-contenido" id="modal-img" src="" alt="Previsualización">
+  </div>
+
+  <!-- Botón para abrir la carta -->
+  <div class="contenedor-carta">
+    <button id="btnCarta" class="btn-carta">💌 Léeme una carta</button>
+  </div>
+
+  <!-- Carta oculta (se mostrará al hacer clic) -->
+  <div id="carta" class="carta-oculta">
+    <div class="carta-contenido">
+      <span class="carta-cerrar" id="cartaCerrar">&times;</span>
+      <div class="carta-sello">❤️</div>
+      <h2>Para mi Kenia</h2>
+      <p>
+        Mi amor,<br><br>
+        A veces me pongo a pensar en cómo empezó todo entre nosotros y todavía me da risa que después de tan poco tiempo
+        termináramos así, queriéndonos de esta manera.<br><br>
+        Me encanta que contigo puedo ser yo, hacerte reír, decir puras mamadas y también tener esos momentos en los que
+        simplemente quiero abrazarte y no soltarte.<br><br>
+        No soy el mejor diciendo cosas románticas, pero contigo sí quiero intentarlo. Quiero que sepas que te quiero
+        muchísimo y que me haces muy feliz. Me encanta compartir mis días contigo, nuestras bromas, nuestras salidas,
+        las piñas coladas jajaja.<br><br>
+        Gracias por llegar a mi vida y por hacer que algo tan bonito se sintiera tan natural. <br><br>
+        Y sí, aunque probablemente siga diciendo que yo te amo más, los dos sabemos que tengo razón.❤️
+      </p>
+      <p class="firma">Con todo mi amor,<br> Sam 🥰</p>
+    </div>
+  </div>
+
+  <!-- Sección: Nuestros planes -->
+  <section id="seccion-planes" class="seccion-planes">
+    <h2 class="titulo-planes">📋 Nuestros planes</h2>
+    <p class="subtitulo-planes">Cosas que queremos hacer juntos ❤️</p>
+
+    <form id="form-plan" class="form-plan">
+      <input type="text" id="plan-input" placeholder="Ej: Ir a los cabos 🌊" required maxlength="100">
+      <button type="submit" class="btn-agregar-plan">➕ Agregar plan</button>
+    </form>
+
+    <div id="lista-planes" class="lista-planes">
+      <!-- Los planes se cargarán aquí -->
+    </div>
+  </section>
+
+  <!-- Sección: Calendario de acontecimientos -->
+  <section id="seccion-calendario" class="seccion-calendario">
+    <h2 class="titulo-calendario">🗓️ Nuestro calendario</h2>
+    <p class="subtitulo-calendario">Para los días importantes… y los que nos cagamos de la risa 🤡</p>
+
+    <form id="form-evento" class="form-evento">
+      <input type="date" id="evento-fecha" required>
+      <input type="text" id="evento-texto" placeholder="Ej: Cuando encontramos un boleto ya pagado 🤡" required maxlength="120">
+      <select id="evento-tipo" aria-label="Tipo de acontecimiento">
+        <option value="💖">💖 Importante</option>
+        <option value="🤡">🤡 Cagado</option>
+        <option value="🎉">🎉 Para celebrar</option>
+      </select>
+      <button type="submit" class="btn-agregar-evento">➕ Guardar acontecimiento</button>
+    </form>
+
+    <div class="calendario-navegacion">
+      <button id="calendario-anterior" type="button" aria-label="Mes anterior">‹</button>
+      <h3 id="calendario-titulo"></h3>
+      <button id="calendario-siguiente" type="button" aria-label="Mes siguiente">›</button>
+    </div>
+    <div class="calendario-semana" aria-hidden="true">
+      <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+    </div>
+    <div id="calendario-dias" class="calendario-dias"></div>
+
+    <div class="acontecimientos-mes">
+      <h3 id="acontecimientos-titulo">Acontecimientos del mes</h3>
+      <div id="lista-acontecimientos" class="lista-acontecimientos"></div>
+    </div>
+  </section>
+
+  <!-- Sección: Razón para sonreír -->
+  <section class="seccion-razon">
+    <button id="btnRazon" class="btn-razon">🌸 Te doy razón para sonreír ❤️</button>
+    <div id="razonContainer" class="razon-container">
+      <p id="razonTexto" class="razon-texto">Haz clic en el botón y descubre una razón ❤️</p>
+    </div>
+  </section>
+
+  <!-- Sección de comentarios -->
+  <section id="comentarios" class="seccion-comentarios">
+    <h2 class="titulo-comentarios">💌 Déjame un mensajito</h2>
+    <form id="form-comentario" class="form-comentario">
+      <textarea id="comentario-input" placeholder="Escribe algo bonito... ❤️" required maxlength="500"></textarea>
+      <button type="submit" class="btn-enviar">Enviar ❤️</button>
+    </form>
+    <div id="lista-comentarios" class="lista-comentarios">
+    </div>
+  </section>
+
+  <footer>
+    <p>Talvez mi letra esta culerisima 😔 .... pero para programar soy la verga 😎</p>
+    <p>Hecho con amor ❤️u❤️ para ti ..... Hasta pasitas? 🤔</p>
+  </footer>
+
+  <!-- Scripts clásicos: se cargan en el mismo orden que tenía script.js. -->
+  <script src="js/firebase.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/petals.js"></script>
+  <script src="js/data/playlist.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/gallery-modal.js"></script>
+  <script src="js/love-heart.js"></script>
+  <script src="js/letter.js"></script>
+  <script src="js/comments.js"></script>
+  <script src="js/data/places.js"></script>
+  <script src="js/memory-map.js"></script>
+  <script src="js/plans.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/data/reasons.js"></script>
+  <script src="js/reasons.js"></script>
+  <script src="js/carousel.js"></script>
+</body>
+
+</html>
