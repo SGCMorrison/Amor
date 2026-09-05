@@ -459,39 +459,67 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ===== SECCIÓN DE COMENTARIOS (FIREBASE FIRESTORE) =====
+// ============================================
+// 8. SECCIÓN DE COMENTARIOS (HILO ESTILO TWITTER)
+// ============================================
 const formComentario = document.getElementById('form-comentario');
 const comentarioInput = document.getElementById('comentario-input');
 const listaComentarios = document.getElementById('lista-comentarios');
 
-// Referencia a la colección de comentarios en Firestore
+// Referencia a la colección
 const comentariosRef = db.collection('comentarios');
 
-// Cargar comentarios en tiempo real
-function cargarComentariosTiempoReal() {
-  comentariosRef
-    .orderBy('fecha', 'desc') // ordenar por fecha (más reciente primero)
-    .onSnapshot((snapshot) => {
-      listaComentarios.innerHTML = '';
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        crearElementoComentario(data.texto, data.fecha, doc.id);
-      });
-    }, (error) => {
-      console.error("Error al cargar comentarios: ", error);
-      listaComentarios.innerHTML = '<p class="comentario-texto">Error al cargar comentarios 😢</p>';
+// Mapa para almacenar todos los comentarios por ID
+let comentariosMap = new Map();
+
+// Función para eliminar un comentario y todas sus respuestas (cascada)
+async function eliminarComentarioYCascada(id) {
+  try {
+    // Buscar todas las respuestas de este comentario
+    const snapshot = await comentariosRef.where('parentId', '==', id).get();
+    const promises = [];
+    snapshot.forEach(doc => {
+      // Eliminar recursivamente cada respuesta
+      promises.push(eliminarComentarioYCascada(doc.id));
     });
+    await Promise.all(promises);
+    // Finalmente eliminar el comentario actual
+    await comentariosRef.doc(id).delete();
+  } catch (error) {
+    console.error("Error al eliminar en cascada: ", error);
+    throw error;
+  }
 }
 
-// Crear elemento de comentario en el DOM
-function crearElementoComentario(texto, fecha, id) {
-  const div = document.createElement('div');
-  div.className = 'comentario-item';
-  
-  // Mostrar fecha legible
-  let fechaMostrar = fecha;
-  if (fecha && fecha.toDate) {
-    fechaMostrar = fecha.toDate().toLocaleString('es-MX', {
+// Función para renderizar un comentario y sus hijos recursivamente
+function renderizarComentario(doc, contenedor, nivel = 0) {
+  const data = doc.data();
+  const id = doc.id;
+
+  // Crear el contenedor del comentario
+  const divComentario = document.createElement('div');
+  divComentario.className = 'comentario-item';
+  divComentario.dataset.id = id;
+  divComentario.style.marginLeft = `${nivel * 20}px`; // sangría progresiva
+  if (nivel > 0) {
+    divComentario.style.borderLeft = '3px solid #ffb6c1';
+    divComentario.style.paddingLeft = '12px';
+    divComentario.style.marginTop = '8px';
+  }
+
+  // Contenido del comentario
+  const contenido = document.createElement('div');
+  contenido.className = 'comentario-contenido';
+
+  // Texto
+  const textoP = document.createElement('p');
+  textoP.className = 'comentario-texto';
+  textoP.textContent = data.texto;
+
+  // Fecha
+  let fechaMostrar = '';
+  if (data.fecha && data.fecha.toDate) {
+    fechaMostrar = data.fecha.toDate().toLocaleString('es-MX', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
@@ -499,35 +527,171 @@ function crearElementoComentario(texto, fecha, id) {
       minute: '2-digit'
     });
   }
-  
-  div.innerHTML = `
-    <p class="comentario-texto">${texto}</p>
-    <span class="comentario-fecha">${fechaMostrar}</span>
-    <button class="btn-eliminar" data-id="${id}" title="Eliminar">🗑️</button>
-  `;
-  
-  // Evento para eliminar
-  div.querySelector('.btn-eliminar').addEventListener('click', async function() {
-    const idComentario = this.getAttribute('data-id');
-    try {
-      await db.collection('comentarios').doc(idComentario).delete();
-    } catch (error) {
-      console.error("Error al eliminar: ", error);
-      alert("No se pudo eliminar el comentario 😢");
+  const fechaSpan = document.createElement('span');
+  fechaSpan.className = 'comentario-fecha';
+  fechaSpan.textContent = fechaMostrar;
+
+  // Acciones
+  const acciones = document.createElement('div');
+  acciones.className = 'comentario-acciones';
+
+  // Botón Responder
+  const btnResponder = document.createElement('button');
+  btnResponder.className = 'btn-responder';
+  btnResponder.textContent = '💬 Responder';
+  btnResponder.addEventListener('click', () => {
+    const formRespuesta = divComentario.querySelector('.comentario-form-respuesta');
+    if (formRespuesta) {
+      const isHidden = formRespuesta.style.display === 'none';
+      formRespuesta.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) {
+        const textarea = formRespuesta.querySelector('textarea');
+        setTimeout(() => textarea.focus(), 100);
+      }
     }
   });
-  
-  listaComentarios.appendChild(div);
+
+  // Botón Eliminar
+  const btnEliminar = document.createElement('button');
+  btnEliminar.className = 'btn-eliminar';
+  btnEliminar.textContent = '🗑️';
+  btnEliminar.title = 'Eliminar comentario y respuestas';
+  btnEliminar.addEventListener('click', async () => {
+    if (confirm('¿Eliminar este comentario y todas sus respuestas?')) {
+      try {
+        await eliminarComentarioYCascada(id);
+      } catch (error) {
+        alert('Error al eliminar');
+      }
+    }
+  });
+
+  acciones.appendChild(btnResponder);
+  acciones.appendChild(btnEliminar);
+
+  contenido.appendChild(textoP);
+  contenido.appendChild(fechaSpan);
+  contenido.appendChild(acciones);
+  divComentario.appendChild(contenido);
+
+  // Contenedor de respuestas (hijos)
+  const respuestasContainer = document.createElement('div');
+  respuestasContainer.className = 'comentario-respuestas';
+  divComentario.appendChild(respuestasContainer);
+
+  // Formulario de respuesta (oculto por defecto)
+  const formRespuesta = document.createElement('div');
+  formRespuesta.className = 'comentario-form-respuesta';
+  formRespuesta.style.display = 'none';
+  formRespuesta.style.marginTop = '8px';
+  formRespuesta.innerHTML = `
+    <textarea placeholder="Escribe tu respuesta... ❤️" rows="2" style="width:100%; border-radius:10px; border:1px solid #ddd; padding:8px; font-family:inherit;"></textarea>
+    <button class="btn-enviar-respuesta" style="margin-top:5px; background:#ff6b81; color:white; border:none; padding:6px 16px; border-radius:20px; cursor:pointer;">Responder</button>
+  `;
+  divComentario.appendChild(formRespuesta);
+
+  // Evento para enviar respuesta
+  const btnEnviarRespuesta = formRespuesta.querySelector('.btn-enviar-respuesta');
+  const textareaRespuesta = formRespuesta.querySelector('textarea');
+  btnEnviarRespuesta.addEventListener('click', async () => {
+    const texto = textareaRespuesta.value.trim();
+    if (texto === '') return;
+    try {
+      await comentariosRef.add({
+        texto: texto,
+        fecha: firebase.firestore.FieldValue.serverTimestamp(),
+        parentId: id
+      });
+      textareaRespuesta.value = '';
+      formRespuesta.style.display = 'none';
+    } catch (error) {
+      alert('No se pudo guardar la respuesta');
+    }
+  });
+
+  // Agregar el comentario al contenedor padre
+  contenedor.appendChild(divComentario);
+
+  // Renderizar hijos (respuestas) recursivamente
+  // Los hijos ya están ordenados por fecha ascendente en el mapa
+  const hijos = comentariosMap.get(id) || [];
+  hijos.forEach(hijoDoc => {
+    renderizarComentario(hijoDoc, respuestasContainer, nivel + 1);
+  });
 }
 
-// Guardar comentario
+// Función para cargar y renderizar todos los comentarios (árbol)
+function cargarComentariosTiempoReal() {
+  comentariosRef
+    .orderBy('fecha', 'desc') // <--- ORDEN DESCENDENTE: los más nuevos primero
+    .onSnapshot((snapshot) => {
+      // Limpiar mapa y lista
+      comentariosMap.clear();
+      listaComentarios.innerHTML = '';
+
+      // Primero, construir un mapa de todos los comentarios por ID
+      const docs = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        docs.push({ id: doc.id, data: data });
+        comentariosMap.set(doc.id, []);
+      });
+
+      // Luego, asignar cada comentario a su padre (si tiene)
+      const roots = [];
+      docs.forEach(({ id, data }) => {
+        const parentId = data.parentId || null;
+        if (parentId === null || parentId === '') {
+          roots.push({ id, data });
+        } else {
+          if (comentariosMap.has(parentId)) {
+            comentariosMap.get(parentId).push({ id, data });
+          } else {
+            // Si el padre no existe, tratarlo como raíz (comentario huérfano)
+            roots.push({ id, data });
+          }
+        }
+      });
+
+      // Ordenar los hijos de cada padre por fecha ascendente (más antiguos primero)
+      // para que las respuestas se muestren en orden cronológico dentro del hilo
+      for (let [parentId, hijos] of comentariosMap.entries()) {
+        if (hijos.length > 0) {
+          hijos.sort((a, b) => {
+            const fechaA = a.data.fecha ? a.data.fecha.toDate() : new Date(0);
+            const fechaB = b.data.fecha ? b.data.fecha.toDate() : new Date(0);
+            return fechaA - fechaB; // ascendente
+          });
+        }
+      }
+
+      // Las raíces ya vienen en orden descendente (más nuevas primero) gracias al .orderBy('fecha', 'desc')
+      // Renderizar cada raíz
+      roots.forEach(raiz => {
+        const docSimulado = {
+          id: raiz.id,
+          data: () => raiz.data
+        };
+        renderizarComentario(docSimulado, listaComentarios, 0);
+      });
+
+      if (roots.length === 0) {
+        listaComentarios.innerHTML = '<p class="comentario-texto" style="text-align:center; color:#999;">Todavía no hay mensajes. ¡Escribe el primero! ❤️</p>';
+      }
+    }, (error) => {
+      console.error("Error al cargar comentarios: ", error);
+      listaComentarios.innerHTML = '<p class="comentario-texto" style="color:red;">Error al cargar comentarios 😢</p>';
+    });
+}
+
+// Guardar comentario raíz (desde el formulario principal)
 async function guardarComentario(texto) {
   try {
     await comentariosRef.add({
       texto: texto,
-      fecha: firebase.firestore.FieldValue.serverTimestamp() // usa la hora del servidor
+      fecha: firebase.firestore.FieldValue.serverTimestamp(),
+      parentId: null // raíz
     });
-    // Limpiar el textarea
     comentarioInput.value = '';
   } catch (error) {
     console.error("Error al guardar: ", error);
@@ -535,18 +699,20 @@ async function guardarComentario(texto) {
   }
 }
 
-// Evento submit del formulario
+// Evento submit del formulario principal
 formComentario.addEventListener('submit', function(e) {
   e.preventDefault();
-  
   const texto = comentarioInput.value.trim();
   if (texto === '') return;
-  
   guardarComentario(texto);
 });
 
 // Iniciar carga en tiempo real
 document.addEventListener('DOMContentLoaded', cargarComentariosTiempoReal);
+
+
+
+
 
 // ===== MAPA DE RECUERDOS =====
 // Inicializar el mapa (centro en México, puedes ajustar)
@@ -679,7 +845,7 @@ function crearElementoPlan(texto, completado, fecha, id) {
   // Evento eliminar
   div.querySelector('.btn-eliminar-plan').addEventListener('click', async function() {
     const idPlan = this.getAttribute('data-id');
-    if (confirm('🫣¿Segura que quieres eliminar este plan?🥲')) {
+    if (confirm('¿Seguro que quieres eliminar este plan?')) {
       try {
         await db.collection('planes').doc(idPlan).delete();
       } catch (error) {

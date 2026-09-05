@@ -960,3 +960,119 @@ visibility: visible;
   50% { opacity: 1; transform: scale(1.05); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+/* Estilos para hilo de comentarios */
+.comentario-item {
+  background: white;
+  border-radius: 15px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s;
+  margin-bottom: 8px;
+}
+
+.comentario-item:hover {
+  background: #fafafa;
+}
+
+.comentario-contenido {
+  width: 100%;
+}
+
+.comentario-texto {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  color: #5a3e36;
+  margin: 0 0 4px 0;
+  word-wrap: break-word;
+}
+
+.comentario-fecha {
+  font-size: 0.7rem;
+  color: #bbb;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.comentario-acciones {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.btn-responder {
+  background: none;
+  border: none;
+  color: #e84393;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 20px;
+  transition: background 0.2s;
+  font-weight: 500;
+}
+
+.btn-responder:hover {
+  background: #fce4ec;
+}
+
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  padding: 4px;
+}
+
+.btn-eliminar:hover {
+  opacity: 1;
+}
+
+.comentario-respuestas {
+  margin-top: 6px;
+}
+
+.comentario-form-respuesta {
+  margin-top: 8px;
+}
+
+.comentario-form-respuesta textarea {
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.comentario-form-respuesta textarea:focus {
+  border-color: #ff6b81;
+}
+
+.btn-enviar-respuesta {
+  background: #ff6b81;
+  color: white;
+  border: none;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.btn-enviar-respuesta:hover {
+  background: #e84393;
+}
+
+.btn-enviar-respuesta:active {
+  transform: scale(0.96);
+}
