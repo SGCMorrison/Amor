@@ -19,9 +19,61 @@
 </head>
 
 <body>
+  
   <header class="hero">
     <h1> ❤️u❤️ Me encantas ❤️u❤️ </h1>
     <!-- <img src="IMAGENES/Orquidea.jpg" alt="Orquídea" class="orquidea-destacada"> -->
+
+<!-- ============================================================
+     SECCIÓN: 21 de Septiembre · Flores Amarillas
+     Pega este bloque donde quieras dentro de tu <body>
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="flores-amarillas.css">
+
+<section class="fa-stage" id="faStage">
+  <canvas id="faFx"></canvas>
+  <div class="fa-vignette"></div>
+
+  <div class="fa-content">
+    <div class="fa-flower-wrap">
+      <svg viewBox="0 0 200 200" id="faHeroFlower" aria-hidden="true">
+        <defs>
+          <radialGradient id="faPg" cx="50%" cy="78%" r="78%">
+            <stop offset="0%"   stop-color="#fff8cf"/>
+            <stop offset="40%"  stop-color="#ffd93d"/>
+            <stop offset="100%" stop-color="#ff9a00"/>
+          </radialGradient>
+          <radialGradient id="faPg2" cx="50%" cy="78%" r="78%">
+            <stop offset="0%"   stop-color="#ffe98a"/>
+            <stop offset="100%" stop-color="#f08c00"/>
+          </radialGradient>
+          <radialGradient id="faCg" cx="45%" cy="38%" r="72%">
+            <stop offset="0%"   stop-color="#fff3b0"/>
+            <stop offset="55%"  stop-color="#ffc300"/>
+            <stop offset="100%" stop-color="#c46a00"/>
+          </radialGradient>
+        </defs>
+        <g id="faBackPetals"></g>
+        <g id="faFrontPetals"></g>
+        <circle class="fa-core" cx="100" cy="100" r="21" fill="url(#faCg)"/>
+      </svg>
+    </div>
+
+    <p class="fa-eyebrow">21 · Septiembre</p>
+    <h2 class="fa-title">Hoy se regalan<br><span class="fa-grad">Flores Amarillas</span></h2>
+    <p class="fa-sub">Hay amores que se dicen sin palabras<br>y flores que se regalan sin motivo. 🌻</p>
+  </div>
+
+  <div class="fa-hint">Toca la pantalla para regalar flores ✨</div>
+</section>
+
+<script src="flores-amarillas.js" defer></script>
+
+
+
 
     <!-- Corazón hecho con la palabra Te amo -->
     <div id="corazon-te-amo" class="corazon-te-amo"></div>
