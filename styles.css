@@ -17,6 +17,8 @@ body {
   overflow-x: hidden;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap');
+
 /* Fondo decorativo con orquídeas (opcional) */
 body::before {
   content: "";
@@ -1392,8 +1394,6 @@ footer {
 
 /* ============================================================
    SECCIÓN: 21 de Septiembre · Flores Amarillas
-   Todos los estilos están con prefijo .fa- para no chocar
-   con tus estilos existentes.
    ============================================================ */
 
 .fa-stage{
@@ -1440,7 +1440,6 @@ footer {
   pointer-events:none;
 }
 
-/* --- Flor principal SVG --- */
 .fa-flower-wrap{
   margin-bottom:clamp(10px, 2.5vh, 26px);
   animation:fa-floaty 6.5s ease-in-out infinite;
@@ -1536,7 +1535,6 @@ footer {
   to  { opacity:1; transform:translateY(0);    filter:blur(0);   }
 }
 
-/* --- Pista inferior --- */
 .fa-hint{
   position:absolute;
   bottom:clamp(16px, 3.5vh, 34px);
