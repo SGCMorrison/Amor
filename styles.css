@@ -1559,3 +1559,343 @@ footer {
 @media (max-width:520px){
   .fa-sub{ max-width:28ch; }
 }
+
+/* ============================================================
+   🌙 TEMA OSCURO ROMÁNTICO — Override
+   Pega esto al FINAL de styles.css
+   ============================================================ */
+
+   :root {
+    --bg-deep:        #0b0514;
+    --bg-mid:         #150a25;
+    --bg-soft:        #1e1030;
+    --surface:        rgba(38, 20, 60, 0.72);
+    --surface-hover:  rgba(52, 28, 82, 0.88);
+    --surface-solid:  #1c0f2e;
+    --border-soft:    rgba(200, 140, 230, 0.18);
+    --border-strong:  rgba(220, 160, 255, 0.40);
+    --text-main:      #ede0fa;
+    --text-soft:      #c1a9dc;
+    --text-muted:     #8a75a8;
+    --accent-pink:    #ff6b9d;
+    --accent-purple:  #b06bff;
+    --accent-gold:    #ffd93d;
+    --glow-purple:    0 0 28px rgba(176, 107, 255, 0.35);
+    --glow-pink:      0 0 28px rgba(255, 107, 157, 0.30);
+  }
+  
+  /* ---------- FONDO GENERAL ---------- */
+  body {
+    background:
+      radial-gradient(ellipse 60% 45% at 12% 8%,  rgba(176, 107, 255, 0.22), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 88% 90%, rgba(255, 107, 157, 0.18), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(120, 60, 180, 0.14), transparent 70%),
+      linear-gradient(165deg, #0b0514 0%, #150a25 45%, #0a0414 100%);
+    background-attachment: fixed;
+    color: var(--text-main);
+  }
+  
+  /* El overlay de orquídeas: en modo oscuro lo hacemos brillar suave */
+  body::before {
+    opacity: 0.06;
+    mix-blend-mode: screen;
+    filter: brightness(1.6) saturate(1.3);
+  }
+  
+  /* ---------- HERO ---------- */
+  .hero h1 {
+    color: #f4c9f0;
+    text-shadow:
+      0 0 18px rgba(255, 107, 157, 0.45),
+      0 0 40px rgba(176, 107, 255, 0.35),
+      2px 2px 0 rgba(0, 0, 0, 0.6);
+  }
+  
+  #contador {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-soft);
+    backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glow-purple);
+  }
+  
+  /* ---------- TARJETAS / CARRUSEL ---------- */
+  .tarjeta {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55), var(--glow-purple);
+  }
+  
+  .tarjeta figcaption h3 { color: #f4c9f0; }
+  .tarjeta figcaption p  { color: var(--text-soft); }
+  
+  .carrusel-container {
+    background: rgba(20, 10, 35, 0.65);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55), var(--glow-purple);
+  }
+  
+  .carrusel-track .tarjeta figcaption {
+    background: rgba(28, 15, 46, 0.85);
+    border-top: 1px solid var(--border-soft);
+  }
+  
+  .carrusel-btn {
+    background: rgba(40, 22, 66, 0.75);
+    color: #f4c9f0;
+    border: 1px solid var(--border-soft);
+  }
+  .carrusel-btn:hover {
+    background: rgba(80, 40, 130, 0.95);
+    color: var(--accent-pink);
+    box-shadow: var(--glow-pink);
+  }
+  
+  .carrusel-indicadores {
+    background: rgba(20, 10, 35, 0.6);
+    border: 1px solid var(--border-soft);
+  }
+  .carrusel-indicadores .punto { background: rgba(200, 140, 230, 0.35); }
+  .carrusel-indicadores .punto.activo {
+    background: var(--accent-pink);
+    box-shadow: 0 0 12px rgba(255, 107, 157, 0.7);
+  }
+  
+  /* ---------- MAPA ---------- */
+  .titulo-mapa { color: #f4c9f0; }
+  #mapa {
+    filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+  .icono-corazon { filter: invert(1) hue-rotate(180deg); }
+  
+  /* ---------- CARTA ---------- */
+  .carta-contenido {
+    background: linear-gradient(160deg, #1e1030 0%, #2a1547 100%);
+    color: var(--text-main);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), var(--glow-pink);
+  }
+  .carta-contenido h2 { color: #ffb3d1; }
+  .carta-contenido p  { color: var(--text-main); }
+  .firma { color: #f4c9f0; }
+  .carta-cerrar { color: var(--accent-pink); }
+  
+  /* ---------- SECCIÓN COMENTARIOS ---------- */
+  .seccion-comentarios {
+    background: rgba(28, 15, 46, 0.7);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--glow-purple);
+    backdrop-filter: blur(10px);
+  }
+  .titulo-comentarios { color: #ffb3d1; }
+  
+  .form-comentario textarea {
+    background: rgba(15, 8, 25, 0.85);
+    color: var(--text-main);
+    border: 2px solid rgba(176, 107, 255, 0.35);
+  }
+  .form-comentario textarea:focus {
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
+  }
+  .form-comentario textarea::placeholder { color: var(--text-muted); }
+  
+  .comentario-item {
+    background: rgba(38, 20, 60, 0.7);
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
+  }
+  .comentario-item:hover { background: var(--surface-hover); }
+  .comentario-texto { color: var(--text-main); }
+  .comentario-fecha { color: var(--text-muted); }
+  
+  .comentario-form-respuesta textarea {
+    background: rgba(15, 8, 25, 0.85);
+    color: var(--text-main);
+    border-color: rgba(176, 107, 255, 0.35);
+  }
+  .comentario-form-respuesta textarea:focus { border-color: var(--accent-pink); }
+  
+  .btn-responder { color: #ffb3d1; }
+  .btn-responder:hover { background: rgba(255, 107, 157, 0.15); }
+  
+  /* ---------- SECCIÓN PLANES ---------- */
+  .seccion-planes {
+    background: rgba(28, 15, 46, 0.7);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--glow-purple);
+    backdrop-filter: blur(10px);
+  }
+  .titulo-planes { color: #ffb3d1; }
+  .subtitulo-planes { color: var(--text-soft); }
+  
+  .form-plan input {
+    background: rgba(15, 8, 25, 0.85);
+    color: var(--text-main);
+    border: 2px solid rgba(176, 107, 255, 0.35);
+  }
+  .form-plan input:focus {
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
+  }
+  .form-plan input::placeholder { color: var(--text-muted); }
+  
+  .plan-item {
+    background: rgba(38, 20, 60, 0.7);
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
+  }
+  .plan-item.completado {
+    background: rgba(25, 15, 40, 0.6);
+    color: var(--text-muted);
+  }
+  .plan-texto { color: var(--text-main); }
+  .plan-item.completado .plan-texto { color: var(--text-muted); }
+  .plan-fecha { color: var(--text-muted); }
+  
+  /* ---------- CALENDARIO ---------- */
+  .seccion-calendario {
+    background: linear-gradient(160deg, #1a0e2e 0%, #22133a 100%);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--glow-purple);
+  }
+  .titulo-calendario { color: #ffb3d1; }
+  .subtitulo-calendario { color: var(--text-soft); }
+  
+  .form-evento input, .form-evento select {
+    background: rgba(15, 8, 25, 0.85);
+    color: var(--text-main);
+    border: 2px solid rgba(176, 107, 255, 0.35);
+  }
+  .form-evento input:focus, .form-evento select:focus {
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
+  }
+  .form-evento input::placeholder { color: var(--text-muted); }
+  
+  .calendario-navegacion h3 { color: #f4c9f0; }
+  .calendario-navegacion button {
+    background: rgba(176, 107, 255, 0.25);
+    color: #f4c9f0;
+    border: 1px solid var(--border-soft);
+  }
+  .calendario-navegacion button:hover {
+    background: rgba(255, 107, 157, 0.35);
+  }
+  
+  .calendario-semana { color: var(--text-muted); }
+  .dia-calendario {
+    background: rgba(30, 16, 48, 0.75);
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
+  }
+  .dia-calendario:hover {
+    background: rgba(60, 30, 95, 0.9);
+    border-color: var(--accent-pink);
+  }
+  .dia-calendario.hoy {
+    border: 2px solid var(--accent-pink);
+    box-shadow: var(--glow-pink);
+  }
+  .dia-calendario.con-eventos { background: rgba(80, 40, 120, 0.55); }
+  
+  .acontecimiento-item {
+    background: rgba(38, 20, 60, 0.75);
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
+  }
+  .acontecimiento-item time { color: #ffb3d1; }
+  .sin-acontecimientos { color: var(--text-muted); }
+  
+  /* ---------- RAZÓN PARA SONREÍR ---------- */
+  .razon-container {
+    background: rgba(28, 15, 46, 0.7);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), var(--glow-purple);
+    backdrop-filter: blur(10px);
+  }
+  .razon-texto { color: #f4c9f0; }
+  
+  /* ---------- REPRODUCTOR ---------- */
+  .reproductor-popup {
+    background: rgba(20, 10, 35, 0.72);
+    border: 1px solid var(--border-strong);
+    color: var(--text-main);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), var(--glow-purple);
+  }
+  .reproductor-info h4 { color: #f4c9f0; }
+  .reproductor-info p  { color: var(--text-soft); }
+  .tiempos            { color: var(--text-muted); }
+  .control-btn        { color: var(--text-main); }
+  .control-btn:hover  { color: var(--accent-pink); }
+  .play-btn           { color: var(--accent-pink); }
+  .cerrar-reproductor { color: var(--text-muted); }
+  .cerrar-reproductor:hover { color: var(--accent-pink); }
+  
+  .reproductor-progreso input[type="range"] {
+    background: rgba(176, 107, 255, 0.25);
+  }
+  .reproductor-progreso input[type="range"]::-webkit-slider-thumb {
+    background: #f4c9f0;
+    border-color: var(--accent-pink);
+  }
+  
+  .btn-toggle-lista { color: var(--text-soft); }
+  .btn-toggle-lista:hover { background: rgba(255, 107, 157, 0.12); }
+  
+  #lista-canciones li:hover { background: rgba(176, 107, 255, 0.18); }
+  #lista-canciones li.activa {
+    background: rgba(255, 107, 157, 0.28);
+    color: #fff;
+  }
+  #lista-canciones li .num { color: var(--text-muted); }
+  
+  /* ---------- BOTÓN FLOTANTE DE MÚSICA ---------- */
+  .boton-musica {
+    background: rgba(30, 15, 50, 0.9);
+    border-color: var(--accent-pink);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(255, 107, 157, 0.5), 3px 3px 0 rgba(0, 0, 0, 0.4);
+  }
+  .boton-musica:hover {
+    box-shadow: 0 0 34px rgba(255, 107, 157, 0.75), 5px 5px 0 rgba(0, 0, 0, 0.5);
+  }
+  
+  /* ---------- MODAL IMAGEN ---------- */
+  .modal { background-color: rgba(5, 2, 10, 0.94); }
+  
+  /* ---------- FOOTER ---------- */
+  footer {
+    color: var(--text-soft);
+  }
+  footer p { color: var(--text-soft); }
+  
+  /* ---------- INICIALES K & S ---------- */
+  #iniciales-ks {
+    color: var(--accent-gold);
+    text-shadow:
+      0 0 20px rgba(255, 107, 157, 0.9),
+      0 0 50px rgba(176, 107, 255, 0.7),
+      0 0 90px rgba(255, 217, 61, 0.4);
+  }
+  
+  /* Corazón "Te amo" — palabras en rosa claro sobre fondo oscuro */
+  .corazon-te-amo span {
+    color: #ff8fc0;
+    text-shadow: 0 0 10px rgba(255, 107, 157, 0.6);
+  }
+  
+  /* ---------- SCROLLBAR (opcional, se ve más pro) ---------- */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #150a25; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #b06bff, #ff6b9d);
+    border-radius: 20px;
+    border: 2px solid #150a25;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ff6b9d, #b06bff); }
+  
+  /* Firefox */
+  * { scrollbar-color: #b06bff #150a25; scrollbar-width: thin; }
